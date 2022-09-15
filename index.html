@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel</title>
+</head>
+<body>
+    <button onclick="beforeBtn()">Prima</button>
+    <button onclick="afterBtn()">Dopo</button>
+    <div class="slider">
+        <div class="slides">
+            <input type="radio" name="radio-btn" id="radio1">
+            <input type="radio" name="radio-btn" id="radio2">
+            <input type="radio" name="radio-btn" id="radio3">
+
+            <div class="slide first">
+                <img id='01' src="prima01.png" alt="">
+            </div>
+            <div class="slide">
+                <img id='02'src="prima02.png" alt="">
+            </div>
+            <div class="slide">
+                <img id='03'src="prima03.png" alt="">
+            </div>
+        </div>
+
+        <div class="navigation">
+            <label data-pos="01" for="radio1" class="manual-btn"></label>
+            <label data-pos="02" for="radio2" class="manual-btn"></label>
+            <label data-pos="03" for="radio3" class="manual-btn"></label>
+    
+        </div>
+    </div>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script>
+        const navigation = document.querySelector('.navigation')
+        const hammertime = new Hammer(navigation);
+            hammertime.get('swipe').set({direction:Hammer.DIRECTION_HORIZONTAL})
+            hammertime.on('doubletap', function(ev) {
+	        console.log(ev);
+        });
+        let currentImg 
+        navigation.addEventListener('click', (e) => {
+            if(!e.target.classList.contains('manual-btn')) return
+            currentImg = e.target.dataset.pos
+        })
+        function afterBtn(){
+            document.getElementById(currentImg).src = `dopo${currentImg}.png`
+
+        }
+        function beforeBtn(){
+            document.getElementById(currentImg).src = `prima${currentImg}.png`
+        }
+    </script>
+</body>
+</html>
